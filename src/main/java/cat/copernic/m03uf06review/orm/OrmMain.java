@@ -5,6 +5,7 @@
  */
 package cat.copernic.m03uf06review.orm;
 
+import cat.copernic.m03uf06review.conexion.Conexion;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -27,14 +28,12 @@ import java.util.List;
 public class OrmMain {
 
     public static void main(String[] args) {
-        String MySQLURL = "jdbc:mysql://localhost/datos";
-            String databseUserName = "root";
-            String databasePassword = "";
-            Connection con = null;
-            List<Registre> taula = new ArrayList<>();
+        Conexion connexioBBDD = new Conexion();
+        Connection con = connexioBBDD.connect();
+        List<Registre> taula = new ArrayList<>();
+        
             try {
-                Class.forName("com.mysql.jdbc.Driver"); 
-                con = DriverManager.getConnection(MySQLURL, databseUserName, databasePassword);
+                
                 if (con != null) {
                     Statement stmt = con.createStatement();
                     String query = "select * from empresa;";
@@ -56,11 +55,12 @@ public class OrmMain {
                     for(Iterator it = taula.iterator(); it.hasNext();) {
                             System.out.println(it.next());
                     }
+                    
+                }
             }
-        }
-        catch (Exception e) {
-                e.printStackTrace();
-        }
+            catch (Exception e) {
+                    e.printStackTrace();
+            }
     }
     
 }
