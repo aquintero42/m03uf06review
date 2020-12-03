@@ -7,8 +7,8 @@ package cat.copernic.m03uf06review.orm;
 
 import cat.copernic.m03uf06review.conexion.Conexion;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -27,40 +27,50 @@ import java.util.List;
  */
 public class OrmMain {
 
+    static List<Registre> taula = new ArrayList<>();
+
     public static void main(String[] args) {
+        consulta();
+        iterador();
+    }
+
+    public static void consulta() {
         Conexion connexioBBDD = new Conexion();
         Connection con = connexioBBDD.connect();
-        List<Registre> taula = new ArrayList<>();
-        
-            try {
-                
-                if (con != null) {
-                    Statement stmt = con.createStatement();
-                    String query = "select * from empresa;";
-                    ResultSet rs = stmt.executeQuery(query);
 
-                    while (rs.next()) {
-                        int horas = rs.getInt("horasExtra");
-                        String horasExtra = "";
-                        if (horas == 0) {
-                            horasExtra = "No";
-                        } else if (horas == 1) {
-                            horasExtra = "Si";
-                        }
-                        
-                        taula.add(new Registre(rs.getInt("id"),rs.getInt("edad"),rs.getDouble("salario"),horasExtra,rs.getString("iniciales"),rs.getString("diaEntrada")));
+        try {
 
+            if (con != null) {
+                Statement stmt = con.createStatement();
+                String query = "select * from empresa;";
+                ResultSet rs = stmt.executeQuery(query);
+
+                while (rs.next()) {
+                    int horas = rs.getInt("horasExtra");
+                    String horasExtra = "";
+                    if (horas == 0) {
+                        horasExtra = "No";
+                    } else if (horas == 1) {
+                        horasExtra = "Si";
                     }
-                    
-                    for(Iterator it = taula.iterator(); it.hasNext();) {
-                            System.out.println(it.next());
-                    }
-                    
+                    Registre r1 = new Registre(rs.getInt("id"), rs.getInt("edad"), rs.getDouble("salario"), horasExtra, rs.getString("iniciales"), rs.getString("diaEntrada"));
+                    sumaRegistro(r1);
                 }
             }
-            catch (Exception e) {
-                    e.printStackTrace();
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-    
+
+    public static void iterador() {
+        for (Iterator it = taula.iterator(); it.hasNext();) {
+            System.out.println(it.next());
+        }
+    }
+
+    public static List<Registre> sumaRegistro(Registre r1) throws SQLException {
+        taula.add(r1);
+        return taula;
+    }
+
 }

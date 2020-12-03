@@ -53,6 +53,32 @@ public class Registre {
         return diaEntrada;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+    public void setSalario(double salario) {
+        this.salario = salario;
+    }
+
+    public void setHorasExtra(String horasExtra) {
+        this.horasExtra = horasExtra;
+    }
+
+    public void setIniciales(String iniciales) {
+        this.iniciales = iniciales;
+    }
+
+    public void setDiaEntrada(String diaEntrada) {
+        this.diaEntrada = diaEntrada;
+    }
+
+    
+    
     @Override
     public String toString() {
         return "Registre{" + "ident=" + id + ", edad=" + edad + ", salario=" + salario + ", horasExtra=" + horasExtra + ", iniciales=" + iniciales + ", diaEntrada=" + diaEntrada + '}';
