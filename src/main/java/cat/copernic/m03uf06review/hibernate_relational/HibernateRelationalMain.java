@@ -13,7 +13,7 @@ package cat.copernic.m03uf06review.hibernate_relational;
  * Cada departament té molts empleats, i un empleat només treballa en un
  * departament.
  * 
- * Recòrrer la relaciçó i mostrar-la per la consola 
+ * Recòrrer la relació i mostrar-la per la consola 
  * 
  * Cal usar la llibreria Hibernate.
  * 

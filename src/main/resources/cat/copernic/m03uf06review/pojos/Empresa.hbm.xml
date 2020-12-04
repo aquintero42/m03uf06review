@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 3, 2020 9:07:21 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cat.copernic.m03uf06review.pojos.Empresa" table="empresa" catalog="datos" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="edad" type="int">
+            <column name="edad" not-null="true" />
+        </property>
+        <property name="salario" type="double">
+            <column name="salario" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="horasExtra" type="boolean">
+            <column name="horasExtra" not-null="true" />
+        </property>
+        <property name="iniciales" type="string">
+            <column name="iniciales" length="3" not-null="true" />
+        </property>
+        <property name="puestoDeTrabajo" type="string">
+            <column name="puestoDeTrabajo" length="24" not-null="true" />
+        </property>
+        <property name="diaEntrada" type="date">
+            <column name="diaEntrada" length="10" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
