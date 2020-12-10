@@ -5,7 +5,10 @@
  */
 package cat.copernic.m03uf06review.hibernate;
 
+import cat.copernic.m03uf06review.conexion.Controller;
+import cat.copernic.m03uf06review.pojos.Empresa;
 import java.sql.Date;
+import java.util.Iterator;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -25,60 +28,59 @@ import org.hibernate.Transaction;
  * @author pep
  */
 public class HibernateMain {
-    static Session s = cat.copernic.m03uf06review.conexion.Controller.getSessionFactory().openSession();
-    static Transaction tr=s.beginTransaction();
-    static cat.copernic.m03uf06review.pojos.Empresa emp = new cat.copernic.m03uf06review.pojos.Empresa();
+    static Session s = Controller.getSessionFactory().openSession();
+    static Transaction tr = s.beginTransaction();
+    static Empresa emp = new Empresa();
     
     public static void main(String[] args) {
-        //insert();
-        //update();
-        //delete();
-        //consultaSimple();
-        consultaHQL();
+        //insert(new Empresa(null,25,935.32,true,"AGF","Junior Software Engineer", new java.util.Date(2020 - 12 - 10)));
+        //update(new Empresa(5,33,4725.72,false,"ABC","Business Analyst", new java.util.Date(1970 - 01 - 01)));
+        //delete(12);
+        consultaSimple(1);
+        //consultaHQL();
         
         tr.commit();
         s.close();
         tr = null;
     }
     
-    public static void insert() {
-        cat.copernic.m03uf06review.pojos.Empresa emp1 = new cat.copernic.m03uf06review.pojos.Empresa();
-        emp1.setId(6);
-        emp1.setEdad(18);
-        emp1.setSalario(1024.54);
-        emp1.setIniciales("AGF");
-        emp1.setPuestoDeTrabajo("Junior Software Engineer");
-        emp1.setDiaEntrada(Date.valueOf("2020-12-03"));
-        s.save(emp1);
+    public static void insert(Empresa emp) {
+        s.save(emp);
         System.out.println("Campos insertados correctamente");
+        mostrarDatos(emp);
     }
     
-    public static void update() {
-        cat.copernic.m03uf06review.pojos.Empresa emp2 = (cat.copernic.m03uf06review.pojos.Empresa) s.load(cat.copernic.m03uf06review.pojos.Empresa.class, 12); 
-        emp2.setEdad(20);
-        emp2.setDiaEntrada(Date.valueOf("2017-12-03"));
-        s.update(emp2);
+    public static void update(Empresa emp) {
+        emp.getId();
+        s.update(emp);
         System.out.println("Campos actualizados correctamente");
+        mostrarDatos(emp);
     }
     
-    public static void delete() {
-        cat.copernic.m03uf06review.pojos.Empresa emp3 = (cat.copernic.m03uf06review.pojos.Empresa) s.load(cat.copernic.m03uf06review.pojos.Empresa.class, 13);
-        s.delete(emp3);
+    public static void delete(Integer id) {
+        Empresa emp = s.get(Empresa.class, id);
+        s.delete(emp);
         System.out.println("Campos eliminados correctamente");
+        mostrarDatos(emp);
     }
     
-    public static void consultaSimple() {
-        cat.copernic.m03uf06review.pojos.Empresa emp4 = (cat.copernic.m03uf06review.pojos.Empresa) s.load(cat.copernic.m03uf06review.pojos.Empresa.class, 1);
-        System.out.println("\nDatos de la consulta:\nID: " + emp4.getId() + "\nEdad: " + emp4.getEdad() + "\nSalario: " + emp4.getSalario() + "\nPuesto de trabajo: " + emp4.getPuestoDeTrabajo());
+    public static void mostrarDatos(Empresa emp) {
+        System.out.println("\nID: " + emp.getId() + "\nEdad: " + emp.getEdad() + "\nSalario: " + emp.getSalario() + "\nIniciales: " + emp.getIniciales() + "\nPuesto de trabajo: " + emp.getPuestoDeTrabajo() + "\nDia de entrada: " + emp.getDiaEntrada());    
+    }
+    
+    public static void consultaSimple(Integer id) {
+        Empresa emp = (Empresa) s.get(Empresa.class, id);
+        System.out.println("\nID: " + emp.getId() + "\nEdad: " + emp.getEdad() + "\nSalario: " + emp.getSalario() + "\nIniciales: " + emp.getIniciales() + "\nPuesto de trabajo: " + emp.getPuestoDeTrabajo() + "\nDia de entrada: " + emp.getDiaEntrada());        
     }
     
     public static void consultaHQL() {
         String HQL = "from Empresa";
         Query q = s.createQuery(HQL);
         
-        List<cat.copernic.m03uf06review.pojos.Empresa> list = q.list();
+        List<Empresa> list = q.list();
         
-        for(cat.copernic.m03uf06review.pojos.Empresa emp : list) {
+        for (Iterator<Empresa> it = list.iterator(); it.hasNext();) {
+            emp = it.next();
             System.out.println("\nDatos de la consulta:\nID: " + emp.getId() + "\nEdad: " + emp.getEdad() + "\nSalario: " + emp.getSalario() + "\nIniciales: " + emp.getIniciales() + "\nPuesto de trabajo: " + emp.getPuestoDeTrabajo() + "\nDia de entrada: " + emp.getDiaEntrada());
         }
         
