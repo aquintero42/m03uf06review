@@ -7,5 +7,6 @@
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/datos?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
     <mapping resource="cat/copernic/m03uf06review/pojos/Empresa.hbm.xml"/>
+    <mapping resource="cat/copernic/m03uf06review/pojos/Empleado.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

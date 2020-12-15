@@ -7,9 +7,11 @@ package cat.copernic.m03uf06review.hibernate;
 
 import cat.copernic.m03uf06review.conexion.Controller;
 import cat.copernic.m03uf06review.pojos.Empresa;
-import java.sql.Date;
+//import java.sql.Date;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -33,35 +35,62 @@ public class HibernateMain {
     static Empresa emp = new Empresa();
     
     public static void main(String[] args) {
-        //insert(new Empresa(null,25,935.32,true,"AGF","Junior Software Engineer", new java.util.Date(2020 - 12 - 10)));
+        //insert(new Empresa(1,25,935.32,true,"AGF","Junior Software Engineer", new java.util.Date(2020 - 12 - 10)));
         //update(new Empresa(5,33,4725.72,false,"ABC","Business Analyst", new java.util.Date(1970 - 01 - 01)));
-        //delete(12);
-        consultaSimple(1);
+        delete(26);
+
+        //consultaSimple(1);
         //consultaHQL();
         
-        tr.commit();
-        s.close();
-        tr = null;
     }
     
     public static void insert(Empresa emp) {
-        s.save(emp);
-        System.out.println("Campos insertados correctamente");
-        mostrarDatos(emp);
+        try {
+            s.save(emp);
+            tr.commit();
+            System.out.println("Campos insertados correctamente");
+            mostrarDatos(emp);
+        } catch (HibernateException e) {
+            if(tr!= null) tr.rollback();
+            e.printStackTrace();
+        } finally {
+            s.close();
+            tr = null;
+        }        
+
     }
     
     public static void update(Empresa emp) {
-        emp.getId();
-        s.update(emp);
-        System.out.println("Campos actualizados correctamente");
-        mostrarDatos(emp);
+        try {
+            emp.getId();
+            s.update(emp);
+            tr.commit();            
+            System.out.println("Campos actualizados correctamente");
+            mostrarDatos(emp);
+        } catch (HibernateException e) {
+            if(tr!= null) tr.rollback();
+            e.printStackTrace();
+        } finally {
+            s.close();
+            tr = null;
+        }        
+
     }
     
     public static void delete(Integer id) {
-        Empresa emp = s.get(Empresa.class, id);
-        s.delete(emp);
-        System.out.println("Campos eliminados correctamente");
-        mostrarDatos(emp);
+        try {
+            Empresa emp = s.get(Empresa.class, id);
+            s.delete(emp);
+            tr.commit();
+            System.out.println("Campos eliminados correctamente");
+            mostrarDatos(emp);
+        } catch (HibernateException e) {
+            if(tr!= null) tr.rollback();
+            e.printStackTrace();
+        } finally {
+            s.close();
+        }        
+
     }
     
     public static void mostrarDatos(Empresa emp) {
