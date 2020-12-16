@@ -26,6 +26,14 @@ public class Empleado {
         this.apellido = apellido;
         this.edad = edad;
     }
+    
+    // Utilizo este constructor para el método updateEmpleado
+    public Empleado(Integer id,String nombre, String apellido, int edad) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.edad = edad;
+    }
 
     public Integer getId() {
         return id;

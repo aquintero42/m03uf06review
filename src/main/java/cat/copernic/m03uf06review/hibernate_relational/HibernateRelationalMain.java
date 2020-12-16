@@ -48,7 +48,8 @@ public class HibernateRelationalMain {
         set2.add(new Tarea("Optimizar el código"));
         set2.add(new Tarea("Solucionar la Issue nº24"));
         set2.add(new Tarea("Preparar los cafés y servirlos"));
-        updateEmpleado(25, set2);
+        //updateEmpleado(new Empleado(28,"Oriol","Bayes", 25), set2);
+        //delete(27);
         //listaEmpleados();
     }
     
@@ -71,13 +72,31 @@ public class HibernateRelationalMain {
         }
     }
     
-    public static void updateEmpleado(Integer id, Set tar) {
+    /*public static void updateEmpleado(Integer id, Set tar) {
         sesion();
         Session s = factory.openSession();
         Transaction tr = null;        
         try {
             tr = s.beginTransaction();
             Empleado emp = s.get(Empleado.class, id);
+            emp.setTareas(tar);
+            s.update(emp);
+            System.out.println("Campos actualizados correctamente");
+            mostrarDatos(emp);
+            tr.commit();
+        } catch (HibernateException e) {
+            if(tr!= null) tr.rollback();
+            e.printStackTrace();
+        } finally {
+            factory.close();
+        }
+    }*/
+    public static void updateEmpleado(Empleado emp, Set tar) {
+        sesion();
+        Session s = factory.openSession();
+        Transaction tr = null;        
+        try {
+            tr = s.beginTransaction();
             emp.setTareas(tar);
             s.update(emp);
             System.out.println("Campos actualizados correctamente");
