@@ -72,25 +72,6 @@ public class HibernateRelationalMain {
         }
     }
     
-    /*public static void updateEmpleado(Integer id, Set tar) {
-        sesion();
-        Session s = factory.openSession();
-        Transaction tr = null;        
-        try {
-            tr = s.beginTransaction();
-            Empleado emp = s.get(Empleado.class, id);
-            emp.setTareas(tar);
-            s.update(emp);
-            System.out.println("Campos actualizados correctamente");
-            mostrarDatos(emp);
-            tr.commit();
-        } catch (HibernateException e) {
-            if(tr!= null) tr.rollback();
-            e.printStackTrace();
-        } finally {
-            factory.close();
-        }
-    }*/
     public static void updateEmpleado(Empleado emp, Set tar) {
         sesion();
         Session s = factory.openSession();
